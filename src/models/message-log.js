@@ -19,4 +19,8 @@ class MessageLog {
   }
 }
 
-module.exports = MessageLog;
+const createMessageLog = (messagesDetails) => {
+  return new MessageLog(messagesDetails);
+};
+
+module.exports = { MessageLog, createMessageLog };

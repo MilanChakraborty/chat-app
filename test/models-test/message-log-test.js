@@ -1,6 +1,9 @@
 const { describe, it } = require('node:test');
 const assert = require('assert');
-const MessageLog = require('../../src/models/message-log');
+const {
+  MessageLog,
+  createMessageLog,
+} = require('../../src/models/message-log');
 
 describe('Message Log', () => {
   it('Should give no messages when token is invalid', () => {
@@ -31,5 +34,14 @@ describe('Message Log', () => {
     const expectedMessagesDetails = { 1: [message] };
 
     assert.deepStrictEqual(messageLog.messagesDetails, expectedMessagesDetails);
+  });
+});
+
+describe('Create Message Log', () => {
+  it('Should create Message Log instance with message details', () => {
+    const messagesDetails = { 1: [], 2: [] };
+    const messageLog = createMessageLog(messagesDetails);
+
+    assert.deepStrictEqual(messageLog.messagesDetails, messagesDetails);
   });
 });
