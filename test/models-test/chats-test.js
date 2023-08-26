@@ -42,6 +42,7 @@ describe('Chats', () => {
     it('Should register message using existing token when users have chatted before', (ctx) => {
       const registerMessage = ctx.mock.fn();
       const messageLog = { registerMessage };
+
       const chats = new Chats(messageLog, {}, { 100: ['milan', 'raj'] });
       chats.addUser('milan');
       chats.addUser('raj');
@@ -60,6 +61,7 @@ describe('Chats', () => {
     it('Should give all the messages for users', (ctx) => {
       const getMessages = ctx.mock.fn();
       const messageLog = { getMessages };
+
       const chats = new Chats(messageLog, {}, { 100: ['milan', 'raj'] });
       chats.addUser('milan');
       chats.addUser('raj');
@@ -74,6 +76,7 @@ describe('Chats', () => {
     it('Should all chat heads of a user', (ctx) => {
       const registerMessage = ctx.mock.fn();
       const messageLog = { registerMessage };
+
       const chats = new Chats(messageLog);
       chats.addUser('milan');
       chats.addUser('raj');
@@ -81,6 +84,23 @@ describe('Chats', () => {
       chats.registerPvtMessage(message);
 
       assert.deepStrictEqual(chats.getChatHeads('milan'), ['raj']);
+    });
+  });
+
+  describe('allChatsDetails', () => {
+    it('Should give all the chats details', (ctx) => {
+      const messageLog = { messagesDetails: {} };
+
+      const chats = new Chats(messageLog);
+      chats.addUser('milan');
+
+      const expectedChatsDetails = {
+        messagesDetails: {},
+        users: { milan: [] },
+        usersToken: {},
+      };
+
+      assert.deepStrictEqual(chats.allChatsDetails, expectedChatsDetails);
     });
   });
 });

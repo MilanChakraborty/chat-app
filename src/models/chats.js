@@ -37,6 +37,14 @@ class Chats {
     return this.#token;
   }
 
+  #getUsersDetails() {
+    return Object.fromEntries(
+      Object.entries(this.#users).map(([username, chatHeads]) => {
+        return [username, [...chatHeads]];
+      })
+    );
+  }
+
   registerPvtMessage({ message, from, to }) {
     let token = this.#getToken([from, to]);
     if (!token) token = this.#createToken([from, to]);
@@ -53,6 +61,14 @@ class Chats {
   getPvtMessages(user1, user2) {
     const token = this.#getToken([user1, user2]);
     return this.#messageLog.getMessages(token);
+  }
+
+  get allChatsDetails() {
+    return {
+      messagesDetails: this.#messageLog.messagesDetails,
+      users: this.#getUsersDetails(),
+      usersToken: this.#usersToken,
+    };
   }
 }
 
