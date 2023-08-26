@@ -20,4 +20,43 @@ describe('ChatsController', () => {
       'Fake Callback',
     ]);
   });
+
+  it('Should be check is User present', (ctx) => {
+    const isUserPresent = ctx.mock.fn();
+    const chats = { isUserPresent };
+    const chatsStorage = {};
+
+    const chatsController = new ChatsController(chats, chatsStorage);
+    chatsController.isUserPresent('milan');
+
+    assert.strictEqual(isUserPresent.mock.callCount(), 1);
+    assert.strictEqual(isUserPresent.mock.calls[0].arguments[0], 'milan');
+  });
+
+  it('Should be able to give all the chatHeads of a user', (ctx) => {
+    const getChatHeads = ctx.mock.fn();
+    const chats = { getChatHeads };
+    const chatsStorage = {};
+
+    const chatsController = new ChatsController(chats, chatsStorage);
+    chatsController.getChatHeads('milan');
+
+    assert.strictEqual(getChatHeads.mock.callCount(), 1);
+    assert.strictEqual(getChatHeads.mock.calls[0].arguments[0], 'milan');
+  });
+
+  it('Should be able to get all direct messages between 2 users', (ctx) => {
+    const getDirectMessages = ctx.mock.fn();
+    const chats = { getDirectMessages };
+    const chatsStorage = {};
+
+    const chatsController = new ChatsController(chats, chatsStorage);
+    chatsController.getDirectMessages('milan', 'raj');
+
+    assert.strictEqual(getDirectMessages.mock.callCount(), 1);
+    assert.deepStrictEqual(getDirectMessages.mock.calls[0].arguments, [
+      'milan',
+      'raj',
+    ]);
+  });
 });

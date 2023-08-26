@@ -15,6 +15,18 @@ class ChatsController {
     this.#chats.addUser(username);
     this.#updateDatabase(onDatabaseUpdate);
   }
+
+  isUserPresent(username) {
+    return this.#chats.isUserPresent(username);
+  }
+
+  getChatHeads(username) {
+    this.#chats.getChatHeads(username);
+  }
+
+  getDirectMessages(user1, user2) {
+    this.#chats.getDirectMessages(user1, user2);
+  }
 }
 
 module.exports = { ChatsController };

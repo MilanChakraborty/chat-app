@@ -22,15 +22,16 @@ describe('Chats', () => {
     });
   });
 
-  describe('registerPrivateMessage', () => {
+  describe('registerDirectMessage', () => {
     it('Should register message creating a new token when users havenot chatted before', (ctx) => {
       const registerMessage = ctx.mock.fn();
       const messageLog = { registerMessage };
+
       const chats = new Chats(messageLog);
       chats.addUser('milan');
       chats.addUser('raj');
       const message = { message: 'hii', from: 'milan', to: 'raj' };
-      chats.registerPvtMessage(message);
+      chats.registerDirectMessage(message);
 
       assert.strictEqual(registerMessage.mock.callCount(), 1);
       assert.deepStrictEqual(registerMessage.mock.calls[0].arguments, [
@@ -47,7 +48,7 @@ describe('Chats', () => {
       chats.addUser('milan');
       chats.addUser('raj');
       const message = { message: 'hii', from: 'milan', to: 'raj' };
-      chats.registerPvtMessage(message);
+      chats.registerDirectMessage(message);
 
       assert.strictEqual(registerMessage.mock.callCount(), 1);
       assert.deepStrictEqual(registerMessage.mock.calls[0].arguments, [
@@ -57,7 +58,7 @@ describe('Chats', () => {
     });
   });
 
-  describe('getPvtMessages', () => {
+  describe('getDirectMessages', () => {
     it('Should give all the messages for users', (ctx) => {
       const getMessages = ctx.mock.fn();
       const messageLog = { getMessages };
@@ -65,7 +66,7 @@ describe('Chats', () => {
       const chats = new Chats(messageLog, {}, { 100: ['milan', 'raj'] });
       chats.addUser('milan');
       chats.addUser('raj');
-      chats.getPvtMessages('milan', 'raj');
+      chats.getDirectMessages('milan', 'raj');
 
       assert.strictEqual(getMessages.mock.callCount(), 1);
       assert.deepStrictEqual(getMessages.mock.calls[0].arguments[0], '100');
@@ -81,7 +82,7 @@ describe('Chats', () => {
       chats.addUser('milan');
       chats.addUser('raj');
       const message = { message: 'hii', from: 'milan', to: 'raj' };
-      chats.registerPvtMessage(message);
+      chats.registerDirectMessage(message);
 
       assert.deepStrictEqual(chats.getChatHeads('milan'), ['raj']);
     });

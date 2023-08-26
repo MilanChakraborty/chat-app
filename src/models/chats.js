@@ -47,7 +47,7 @@ class Chats {
     );
   }
 
-  registerPvtMessage({ message, from, to }) {
+  registerDirectMessage({ message, from, to }) {
     let token = this.#getToken([from, to]);
     if (!token) token = this.#createToken([from, to]);
     this.#users[from].add(to);
@@ -60,7 +60,7 @@ class Chats {
     return [...this.#users[username]];
   }
 
-  getPvtMessages(user1, user2) {
+  getDirectMessages(user1, user2) {
     const token = this.#getToken([user1, user2]);
     return this.#messageLog.getMessages(token);
   }
