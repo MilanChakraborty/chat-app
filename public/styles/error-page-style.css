@@ -1,0 +1,44 @@
+:root {
+  --white: white;
+  --black: rgb(0, 0, 0);
+  --seashell: rgb(238, 241, 243);
+  --nile-blue: rgb(22, 60, 77);
+  --light-carmine-pink: rgb(224, 106, 124);
+  --brandy-punch: rgb(194, 134, 48);
+  --comet: rgb(95, 81, 122);
+  --grey-green: rgb(118, 156, 123);
+  --hippie-blue: rgb(94, 159, 170);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 10px;
+}
+
+body {
+  background-color: var(--seashell);
+}
+
+.page-header {
+  width: 100%;
+  text-align: center;
+  font-size: 6em;
+  color: var(--nile-blue);
+  margin-bottom: 2em;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5em;
+  align-items: center;
+}
+
+p {
+  color: var(--nile-blue);
+  font-size: 2.5em;
+}
