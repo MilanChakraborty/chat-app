@@ -69,4 +69,18 @@ describe('Chats', () => {
       assert.deepStrictEqual(getMessages.mock.calls[0].arguments[0], '100');
     });
   });
+
+  describe('getChatHeads', () => {
+    it('Should all chat heads of a user', (ctx) => {
+      const registerMessage = ctx.mock.fn();
+      const messageLog = { registerMessage };
+      const chats = new Chats(messageLog);
+      chats.addUser('milan');
+      chats.addUser('raj');
+      const message = { message: 'hii', from: 'milan', to: 'raj' };
+      chats.registerPvtMessage(message);
+
+      assert.deepStrictEqual(chats.getChatHeads('milan'), ['raj']);
+    });
+  });
 });

@@ -46,6 +46,10 @@ class Chats {
     this.#messageLog.registerMessage(token, { message, from, to });
   }
 
+  getChatHeads(username) {
+    return [...this.#users[username]];
+  }
+
   getPvtMessages(user1, user2) {
     const token = this.#getToken([user1, user2]);
     return this.#messageLog.getMessages(token);
