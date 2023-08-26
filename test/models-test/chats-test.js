@@ -88,7 +88,7 @@ describe('Chats', () => {
   });
 
   describe('allChatsDetails', () => {
-    it('Should give all the chats details', (ctx) => {
+    it('Should give all the chats details', () => {
       const messageLog = { messagesDetails: {} };
 
       const chats = new Chats(messageLog);
