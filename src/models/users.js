@@ -27,6 +27,10 @@ class Users {
     this.#users[userHash] = { username, password };
     return userHash;
   }
+
+  get details() {
+    return this.#users;
+  }
 }
 
 const createUsers = (usersDetails) => {

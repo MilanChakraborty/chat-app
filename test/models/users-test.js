@@ -46,6 +46,15 @@ describe('Users', () => {
       assert.strictEqual(users.validateUserLogin('milan', '123'), false);
     });
   });
+
+  it('Should be able to give all users data', () => {
+    const users = new Users();
+    const userHash = users.addUser('milan', '1234');
+
+    assert.deepStrictEqual(users.details, {
+      [userHash]: { username: 'milan', password: '1234' },
+    });
+  });
 });
 
 describe('CreateUser', () => {
