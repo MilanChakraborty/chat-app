@@ -1,0 +1,26 @@
+{
+  "name": "sudoku",
+  "version": "1.0.0",
+  "description": "This is a Simple Server Based Sudoku game",
+  "main": "main.js",
+  "scripts": {
+    "test": "node --test",
+    "lint": "npx eslint .",
+    "start": "node main.js",
+    "dev": "node --watch main.js",
+    "coverage": "npx nyc npm run test"
+  },
+  "keywords": [
+    "sudoku"
+  ],
+  "author": "Milan Chakraborty",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.48.0",
+    "nyc": "^15.1.0",
+    "supertest": "^6.3.3"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
