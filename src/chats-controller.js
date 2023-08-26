@@ -16,6 +16,11 @@ class ChatsController {
     this.#updateDatabase(onDatabaseUpdate);
   }
 
+  registerDirectMessage(messagesDetails, onDatabaseUpdate) {
+    this.#chats.registerDirectMessage(messagesDetails);
+    this.#updateDatabase(onDatabaseUpdate);
+  }
+
   isUserPresent(username) {
     return this.#chats.isUserPresent(username);
   }

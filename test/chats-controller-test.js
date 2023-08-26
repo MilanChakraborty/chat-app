@@ -59,4 +59,20 @@ describe('ChatsController', () => {
       'raj',
     ]);
   });
+
+  it('Should be able to register direct message', (ctx) => {
+    const registerDirectMessage = ctx.mock.fn();
+    const updateDatabase = ctx.mock.fn();
+    const chatsStorage = { updateDatabase };
+    const chats = { registerDirectMessage, allChatsDetails: 'Fake Data' };
+
+    const chatsController = new ChatsController(chats, chatsStorage);
+    chatsController.registerDirectMessage('Fake Message Details');
+
+    assert.strictEqual(registerDirectMessage.mock.callCount(), 1);
+    assert.strictEqual(
+      registerDirectMessage.mock.calls[0].arguments[0],
+      'Fake Message Details'
+    );
+  });
 });
