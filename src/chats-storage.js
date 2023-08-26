@@ -15,6 +15,10 @@ class ChatsStorage {
     const rawData = this.#fs.readFileSync(this.#storagePath, 'utf-8');
     this.#chatsData = JSON.parse(rawData || '{}');
   }
+
+  get chatsData() {
+    return this.#chatsData;
+  }
 }
 
 module.exports = ChatsStorage;

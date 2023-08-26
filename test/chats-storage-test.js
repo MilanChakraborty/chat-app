@@ -32,4 +32,15 @@ describe('Chats Storage', () => {
       '{}',
     ]);
   });
+
+  it('Should be able to give details of chats read from file', (ctx) => {
+    const existsSync = ctx.mock.fn(() => true);
+    const readFileSync = ctx.mock.fn(() => '{ "data": "fake data" }');
+    const fs = { existsSync, readFileSync };
+
+    const chatsStorage = new ChatsStorage('./somewhere', fs);
+    chatsStorage.init();
+
+    assert.deepStrictEqual(chatsStorage.chatsData, { data: 'fake data' });
+  });
 });
