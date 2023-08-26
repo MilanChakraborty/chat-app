@@ -25,7 +25,7 @@ class Chats {
     const usersToken = Object.entries(this.#usersToken).find(
       areParticipantsPresent
     );
-    const [token] = (usersToken || []);
+    const [token] = usersToken || [];
 
     return token;
   }
@@ -44,6 +44,11 @@ class Chats {
     this.#users[to].add(from);
 
     this.#messageLog.registerMessage(token, { message, from, to });
+  }
+
+  getPvtMessages(user1, user2) {
+    const token = this.#getToken([user1, user2]);
+    return this.#messageLog.getMessages(token);
   }
 }
 

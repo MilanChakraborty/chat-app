@@ -55,4 +55,18 @@ describe('Chats', () => {
       ]);
     });
   });
+
+  describe('getPvtMessages', () => {
+    it('Should give all the messages for users', (ctx) => {
+      const getMessages = ctx.mock.fn();
+      const messageLog = { getMessages };
+      const chats = new Chats(messageLog, {}, { 100: ['milan', 'raj'] });
+      chats.addUser('milan');
+      chats.addUser('raj');
+      chats.getPvtMessages('milan', 'raj');
+
+      assert.strictEqual(getMessages.mock.callCount(), 1);
+      assert.deepStrictEqual(getMessages.mock.calls[0].arguments[0], '100');
+    });
+  });
 });
