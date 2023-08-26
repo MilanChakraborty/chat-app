@@ -19,6 +19,16 @@ class ChatsStorage {
   get chatsData() {
     return this.#chatsData;
   }
+
+  updateDatabase(chatsData, onDatabaseUpdate) {
+    this.#chatsData = chatsData;
+
+    this.#fs.writeFile(
+      this.#storagePath,
+      JSON.stringify(chatsData),
+      onDatabaseUpdate
+    );
+  }
 }
 
 module.exports = ChatsStorage;

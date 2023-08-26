@@ -43,4 +43,19 @@ describe('Chats Storage', () => {
 
     assert.deepStrictEqual(chatsStorage.chatsData, { data: 'fake data' });
   });
+
+  it('Should be able to update database with new data', (ctx) => {
+    const writeFile = ctx.mock.fn();
+    const fs = { writeFile };
+
+    const chatsStorage = new ChatsStorage('./somewhere', fs);
+    chatsStorage.updateDatabase({ data: 'new data' }, 'fake function');
+
+    assert.strictEqual(writeFile.mock.callCount(), 1);
+    assert.deepStrictEqual(writeFile.mock.calls[0].arguments, [
+      './somewhere',
+      '{"data":"new data"}',
+      'fake function',
+    ]);
+  });
 });
