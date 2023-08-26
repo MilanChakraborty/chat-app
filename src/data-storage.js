@@ -1,7 +1,7 @@
-class ChatsStorage {
+class DataStorage {
   #storagePath;
   #fs;
-  #chatsData;
+  #data;
   constructor(storagePath, fs) {
     this.#storagePath = storagePath;
     this.#fs = fs;
@@ -13,22 +13,22 @@ class ChatsStorage {
     }
 
     const rawData = this.#fs.readFileSync(this.#storagePath, 'utf-8');
-    this.#chatsData = JSON.parse(rawData || '{}');
+    this.#data = JSON.parse(rawData || '{}');
   }
 
-  get chatsData() {
-    return this.#chatsData;
+  get data() {
+    return this.#data;
   }
 
-  updateDatabase(chatsData, onDatabaseUpdate) {
-    this.#chatsData = chatsData;
+  updateDatabase(data, onDatabaseUpdate) {
+    this.#data = data;
 
     this.#fs.writeFile(
       this.#storagePath,
-      JSON.stringify(chatsData),
+      JSON.stringify(data),
       onDatabaseUpdate
     );
   }
 }
 
-module.exports = ChatsStorage;
+module.exports = DataStorage;
