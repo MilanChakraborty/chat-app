@@ -11,4 +11,48 @@ describe('Chats', () => {
       assert.strictEqual(chats.isUserPresent('milan'), false);
     });
   });
+
+  describe('addUser', () => {
+    it('Should be able to add a new user', () => {
+      const messageLog = {};
+      const chats = new Chats(messageLog);
+      chats.addUser('milan');
+
+      assert.strictEqual(chats.isUserPresent('milan'), true);
+    });
+  });
+
+  describe('registerPrivateMessage', () => {
+    it('Should register message creating a new token when users havenot chatted before', (ctx) => {
+      const registerMessage = ctx.mock.fn();
+      const messageLog = { registerMessage };
+      const chats = new Chats(messageLog);
+      chats.addUser('milan');
+      chats.addUser('raj');
+      const message = { message: 'hii', from: 'milan', to: 'raj' };
+      chats.registerPvtMessage(message);
+
+      assert.strictEqual(registerMessage.mock.callCount(), 1);
+      assert.deepStrictEqual(registerMessage.mock.calls[0].arguments, [
+        1,
+        { message: 'hii', from: 'milan', to: 'raj' },
+      ]);
+    });
+
+    it('Should register message using existing token when users have chatted before', (ctx) => {
+      const registerMessage = ctx.mock.fn();
+      const messageLog = { registerMessage };
+      const chats = new Chats(messageLog, {}, { 100: ['milan', 'raj'] });
+      chats.addUser('milan');
+      chats.addUser('raj');
+      const message = { message: 'hii', from: 'milan', to: 'raj' };
+      chats.registerPvtMessage(message);
+
+      assert.strictEqual(registerMessage.mock.callCount(), 1);
+      assert.deepStrictEqual(registerMessage.mock.calls[0].arguments, [
+        '100',
+        { message: 'hii', from: 'milan', to: 'raj' },
+      ]);
+    });
+  });
 });
