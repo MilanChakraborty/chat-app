@@ -1,6 +1,6 @@
 const { describe, it } = require('node:test');
 const assert = require('assert');
-const Chats = require('../../src/models/chats');
+const { Chats, createChats } = require('../../src/models/chats');
 
 describe('Chats', () => {
   describe('isUserPresent', () => {
@@ -96,11 +96,24 @@ describe('Chats', () => {
 
       const expectedChatsDetails = {
         messagesDetails: {},
-        users: { milan: [] },
-        usersToken: {},
+        usersDetails: { milan: [] },
+        usersTokenData: {},
       };
 
       assert.deepStrictEqual(chats.allChatsDetails, expectedChatsDetails);
     });
+  });
+});
+
+describe('createChats', () => {
+  it('Should create a Chats instance with the details provided', () => {
+    const chatsDetails = {
+      messagesDetails: {},
+      usersDetails: { milan: [] },
+      usersTokenData: {},
+    };
+    const chats = createChats(chatsDetails);
+
+    assert.deepStrictEqual(chats.allChatsDetails, chatsDetails);
   });
 });

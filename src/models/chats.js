@@ -1,3 +1,5 @@
+const { createMessageLog } = require('./message-log');
+
 class Chats {
   #messageLog;
   #users;
@@ -66,10 +68,26 @@ class Chats {
   get allChatsDetails() {
     return {
       messagesDetails: this.#messageLog.messagesDetails,
-      users: this.#getUsersDetails(),
-      usersToken: this.#usersToken,
+      usersDetails: this.#getUsersDetails(),
+      usersTokenData: this.#usersToken,
     };
   }
 }
 
-module.exports = Chats;
+const createUsers = (usersTokenData) => {
+  return Object.fromEntries(
+    Object.entries(usersTokenData).map(([username, chatHeads]) => [
+      username,
+      new Set(chatHeads),
+    ])
+  );
+};
+
+const createChats = ({ messagesDetails, usersDetails, usersTokenData }) => {
+  const messageLog = createMessageLog(messagesDetails);
+  const users = createUsers(usersDetails);
+
+  return new Chats(messageLog, users, usersTokenData);
+};
+
+module.exports = { Chats, createChats };

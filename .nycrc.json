@@ -1,4 +1,6 @@
 {
   "all": true,
-  "reporter": ["html", "text"]
+  "reporter": ["html", "text"],
+  "statements": 80,
+  "check-coverage": "true"
 }
