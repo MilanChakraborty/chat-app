@@ -41,6 +41,8 @@ class View {
     const chatHeadElement = document.createElement('p');
     chatHeadElement.innerText = chatHead;
     chatHeadElement.classList.add('chat-head');
+    const { connect } = this.#listeners;
+    chatHeadElement.onclick = () => connect(chatHead);
 
     return chatHeadElement;
   }
@@ -48,19 +50,49 @@ class View {
   #createConnectedToHeader(connectedTo) {
     const header = document.createElement('header');
     const headingElement = document.createElement('h1');
-    headingElement.innerText = `____  ${connectedTo}  ____`;
+    headingElement.innerText = `${connectedTo}`;
     headingElement.classList.add('connect-to-header');
     header.append(headingElement);
 
     return header;
   }
 
-  #createChatElement(chat) {
+  #addMessageAndTimeStamp(chatElement, message, timestamp) {
+    const messageElement = document.createElement('p');
+    const timestampElement = document.createElement('p');
+
+    messageElement.innerText = message;
+    messageElement.classList.add('message');
+    timestampElement.innerText = timestamp;
+    timestampElement.classList.add('timestamp');
+
+    chatElement.append(messageElement, timestampElement);
+  }
+
+  #addMessageTypeClass(chatElement, isRecievedMessage) {
+    if (isRecievedMessage) {
+      chatElement.classList.add('recieve-message');
+      return;
+    }
+    chatElement.classList.add('send-message');
+  }
+
+  #createChatElement({ from, message, timestamp }, connectedTo) {
     const chatElement = document.createElement('p');
-    chatElement.innerText = JSON.stringify(chat);
+    const isRecievedMessage = from === connectedTo;
     chatElement.classList.add('chat');
 
+    this.#addMessageTypeClass(chatElement, isRecievedMessage);
+    this.#addMessageAndTimeStamp(chatElement, message, timestamp);
+
     return chatElement;
+  }
+
+  #createChatsContainer() {
+    const chatsContainer = document.createElement('section');
+    chatsContainer.classList.add('chats-container');
+
+    return chatsContainer;
   }
 
   renderAuthSection({ username }) {
@@ -80,7 +112,12 @@ class View {
   renderChatHistory(connectedTo, chats) {
     this.#removeExistingElements(this.#chatHistoryContainer);
     const connectedToHeader = this.#createConnectedToHeader(connectedTo);
-    const chatsElements = chats.map((chat) => this.#createChatElement(chat));
-    this.#chatHistoryContainer.append(connectedToHeader, ...chatsElements);
+    const chatsContainer = this.#createChatsContainer();
+    const chatsElements = chats.map((chat) =>
+      this.#createChatElement(chat, connectedTo)
+    );
+
+    chatsContainer.append(...chatsElements);
+    this.#chatHistoryContainer.append(connectedToHeader, chatsContainer);
   }
 }

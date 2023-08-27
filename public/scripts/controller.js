@@ -87,7 +87,11 @@ class Controller {
   start() {
     this.#fetchAndRenderLoginDetails();
     this.#fetchAndRenderChatHeads();
+
     this.#view.addListener('logout', () => this.#requestLogout('logout'));
+    this.#view.addListener('connect', (connectTo) =>
+      this.#onConnect(connectTo)
+    );
     this.#inputController.onConnect((connectTo) => this.#onConnect(connectTo));
     this.#inputController.onSend((message) => this.#onSend(message));
   }
