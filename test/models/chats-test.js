@@ -36,7 +36,7 @@ describe('Chats', () => {
       assert.strictEqual(registerMessage.mock.callCount(), 1);
       assert.deepStrictEqual(registerMessage.mock.calls[0].arguments, [
         1,
-        { message: 'hii', from: 'milan', to: 'raj' },
+        { message: 'hii', from: 'milan', to: 'raj', timestamp: undefined },
       ]);
     });
 
@@ -53,7 +53,7 @@ describe('Chats', () => {
       assert.strictEqual(registerMessage.mock.callCount(), 1);
       assert.deepStrictEqual(registerMessage.mock.calls[0].arguments, [
         '100',
-        { message: 'hii', from: 'milan', to: 'raj' },
+        { message: 'hii', from: 'milan', to: 'raj', timestamp: undefined },
       ]);
     });
   });

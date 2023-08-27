@@ -47,13 +47,13 @@ class Chats {
     );
   }
 
-  registerDirectMessage({ message, from, to }) {
+  registerDirectMessage({ message, from, to, timestamp }) {
     let token = this.#getToken([from, to]);
     if (!token) token = this.#createToken([from, to]);
     this.#users[from].add(to);
     this.#users[to].add(from);
 
-    this.#messageLog.registerMessage(token, { message, from, to });
+    this.#messageLog.registerMessage(token, { message, from, to, timestamp });
   }
 
   getChatHeads(username) {

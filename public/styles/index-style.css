@@ -154,8 +154,7 @@ body {
 .chat {
   width: 90%;
   height: 2em;
-  margin: 0 auto 1em auto;
-  border: 1px solid black;
+  margin: 0 auto 0.5em auto;
 }
 
 .chat-head {

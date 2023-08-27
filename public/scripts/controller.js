@@ -72,6 +72,14 @@ class Controller {
     });
   }
 
+  #onSend(message) {
+    if (!this.#connectedTo)
+      return alert('Please Connect To Someone to Send Message');
+    this.#chatService.sendDirectMessage(this.#connectedTo, message, () => {
+      this.#fetchAndRenderChatHistory();
+    });
+  }
+
   #requestLogout() {
     this.#chatService.requestLogout();
   }
@@ -81,6 +89,6 @@ class Controller {
     this.#fetchAndRenderChatHeads();
     this.#view.addListener('logout', () => this.#requestLogout('logout'));
     this.#inputController.onConnect((connectTo) => this.#onConnect(connectTo));
-    this.#inputController.onSend((message) => console.log(message));
+    this.#inputController.onSend((message) => this.#onSend(message));
   }
 }

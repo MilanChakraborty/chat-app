@@ -15,6 +15,7 @@ const {
   handleChatHeadsRequest,
   handleUserExistsRequest,
   handleChatHistoryRequest,
+  handleDirectMessageRequest,
 } = require('./handlers/chat-handlers.js');
 
 const addChatHandlers = (app) => {
@@ -24,6 +25,12 @@ const addChatHandlers = (app) => {
     '/chat-history/:withUser',
     validateUserLogin,
     handleChatHistoryRequest
+  );
+
+  app.post(
+    '/direct-message/:to',
+    validateUserLogin,
+    handleDirectMessageRequest
   );
 };
 

@@ -25,8 +25,24 @@ const handleChatHistoryRequest = (req, res) => {
   res.json(chatHistory);
 };
 
+const handleDirectMessageRequest = (req, res) => {
+  const { chatsController, authController } = req.app.context;
+  const { message } = req.body;
+  const timestamp = new Date().toGMTString();
+  const { to } = req.params;
+  const { auth } = req.cookies;
+  const username = authController.getUsername(auth);
+  const messageDetails = { from: username, message, to, timestamp };
+
+  chatsController.registerDirectMessage(messageDetails, () => {
+    res.status(204);
+    res.end();
+  });
+};
+
 module.exports = {
   handleChatHeadsRequest,
   handleUserExistsRequest,
   handleChatHistoryRequest,
+  handleDirectMessageRequest,
 };

@@ -57,7 +57,7 @@ class View {
 
   #createChatElement(chat) {
     const chatElement = document.createElement('p');
-    chatElement.innerText = chat;
+    chatElement.innerText = JSON.stringify(chat);
     chatElement.classList.add('chat');
 
     return chatElement;
@@ -78,6 +78,7 @@ class View {
   }
 
   renderChatHistory(connectedTo, chats) {
+    this.#removeExistingElements(this.#chatHistoryContainer);
     const connectedToHeader = this.#createConnectedToHeader(connectedTo);
     const chatsElements = chats.map((chat) => this.#createChatElement(chat));
     this.#chatHistoryContainer.append(connectedToHeader, ...chatsElements);

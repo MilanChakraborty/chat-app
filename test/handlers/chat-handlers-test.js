@@ -7,6 +7,7 @@ describe('GET /chat-heads', () => {
     const getUsername = ctx.mock.fn();
     const getChatHeads = ctx.mock.fn(() => ['raj']);
     const isUserPresent = () => true;
+
     const authController = { getUsername, isUserPresent };
     const chatsController = { getChatHeads };
 
@@ -46,6 +47,7 @@ describe('GET /chat-history/:withUser', () => {
     const isUserPresent = ctx.mock.fn(() => true);
     const getUsername = ctx.mock.fn(() => 'milan');
     const getDirectMessages = ctx.mock.fn(() => []);
+
     const authController = { isUserPresent, getUsername };
     const chatsController = { isUserPresent, getDirectMessages };
 
@@ -57,6 +59,27 @@ describe('GET /chat-history/:withUser', () => {
       .set('Cookie', 'auth=userHash')
       .expect(200)
       .expect([])
+      .end(done);
+  });
+});
+
+describe('POST /direct-message/:to', () => {
+  it('Should register the direct message', (ctx, done) => {
+    const isUserPresent = ctx.mock.fn(() => true);
+    const getUsername = ctx.mock.fn(() => 'milan');
+    const registerDirectMessage = ctx.mock.fn((_, callback) => callback());
+
+    const authController = { isUserPresent, getUsername };
+    const chatsController = { isUserPresent, registerDirectMessage };
+
+    const app = createAndSetupApp();
+    app.context = { authController, chatsController };
+
+    request(app)
+      .post('/direct-message/raj')
+      .set('Cookie', 'auth=userHash')
+      .send({ message: 'hello' })
+      .expect(204)
       .end(done);
   });
 });

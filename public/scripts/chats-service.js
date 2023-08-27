@@ -27,6 +27,18 @@ class ChatService {
       .catch((err) => console.log(err));
   }
 
+  sendDirectMessage(connectedTo, message, onResponse) {
+    fetch(`/direct-message/${connectedTo}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message }),
+    })
+      .then((res) => {
+        if (res.status === 204) return onResponse();
+      })
+      .catch((err) => console.log(err));
+  }
+
   requestLogout() {
     fetch('/logout', { method: 'POST' })
       .then((res) => {
