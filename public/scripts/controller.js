@@ -50,12 +50,19 @@ class Controller {
     });
   }
 
+  #fetchAndRenderChatHeads() {
+    this.#chatService.getChatHeads((chatHeads) => {
+      this.#view.renderChatHeads(chatHeads);
+    });
+  }
+
   #requestLogout() {
     this.#chatService.requestLogout();
   }
 
   start() {
     this.#fetchAndRenderLoginDetails();
+    this.#fetchAndRenderChatHeads();
     this.#view.addListener('logout', () => this.#requestLogout('logout'));
     this.#inputController.onConnect((connectTo) => console.log(connectTo));
     this.#inputController.onSend((message) => console.log(message));

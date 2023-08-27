@@ -6,6 +6,13 @@ class ChatService {
       .catch((err) => console.log(err));
   }
 
+  getChatHeads(onResponse) {
+    fetch('/chat-heads', { method: 'GET' })
+      .then((response) => response.json())
+      .then((data) => onResponse(data))
+      .catch((err) => console.log(err));
+  }
+
   requestLogout() {
     fetch('/logout', { method: 'POST' })
       .then((response) => {

@@ -10,6 +10,24 @@ const invalidPassword = (authController, userHash, username, password) =>
   authController.isUserPresent(userHash) &&
   !authController.validateUserLogin(username, password);
 
+const redirectToLoginPage = (_, res) => {
+  res.redirect('/pages/login.html');
+};
+
+const userLoggedIn = (req) => req.cookies.auth !== undefined;
+
+const isValidUser = (req) => {
+  const { authController } = req.app.context;
+  const userHash = req.cookies.auth;
+  return authController.isUserPresent(userHash);
+};
+
+const validateUserLogin = (req, res, next) => {
+  if (!userLoggedIn(req) || !isValidUser(req))
+    return redirectToLoginPage(req, res);
+  next();
+};
+
 const handleLoginRequest = (req, res) => {
   const { username, password } = req.body;
   const { authController, chatsController } = req.app.context;
@@ -46,6 +64,7 @@ const handleLogoutRequest = (request, response) => {
 };
 
 module.exports = {
+  validateUserLogin,
   handleLoginRequest,
   handleLoginDetailsRequest,
   handleLogoutRequest,

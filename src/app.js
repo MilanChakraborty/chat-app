@@ -2,14 +2,20 @@ const express = require('express');
 const { requestLogger } = require('./middlewares/logger.js');
 const { attachCookies } = require('./middlewares/attach-cookies.js');
 const {
-  handleHomePageRequest,
   respondNotFound,
+  serveHomePage,
 } = require('./handlers/resource-route-handlers');
 const {
   handleLoginRequest,
   handleLoginDetailsRequest,
   handleLogoutRequest,
+  validateUserLogin,
 } = require('./handlers/auth-handlers.js');
+const { handleChatHeadsRequest } = require('./handlers/chat-handlers.js');
+
+const addChatHandlers = (app) => {
+  app.get('/chat-heads', validateUserLogin, handleChatHeadsRequest);
+};
 
 const addAuthHandlers = (app) => {
   app.get('/login-details', handleLoginDetailsRequest);
@@ -26,7 +32,8 @@ const addMiddlewares = (app) => {
 
 const addRouteHandlers = (app) => {
   addAuthHandlers(app);
-  app.get('/', handleHomePageRequest);
+  addChatHandlers(app);
+  app.get('/', validateUserLogin, serveHomePage);
   app.use(express.static('public'));
   app.use(respondNotFound);
 };

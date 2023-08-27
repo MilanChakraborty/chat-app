@@ -29,11 +29,11 @@ class ChatsController {
   }
 
   getChatHeads(username) {
-    this.#chats.getChatHeads(username);
+    return this.#chats.getChatHeads(username);
   }
 
   getDirectMessages(user1, user2) {
-    this.#chats.getDirectMessages(user1, user2);
+    return this.#chats.getDirectMessages(user1, user2);
   }
 }
 
