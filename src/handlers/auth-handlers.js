@@ -12,7 +12,6 @@ const invalidPassword = (authController, userHash, username, password) =>
 
 const handleLoginRequest = (req, res) => {
   const { username, password } = req.body;
-  console.log(username, password);
   const { authController } = req.app.context;
   const userHash = authController.getUserHash(username);
 
@@ -30,4 +29,13 @@ const handleLoginRequest = (req, res) => {
   });
 };
 
-module.exports = { handleLoginRequest };
+const handleLoginDetailsRequest = (req, res) => {
+  const { authController } = req.app.context;
+  const { auth } = req.cookies;
+  const username = authController.getUsername(auth);
+  const isLoggedIn = authController.isUserPresent(auth);
+
+  res.json({ username, isLoggedIn });
+};
+
+module.exports = { handleLoginRequest, handleLoginDetailsRequest };

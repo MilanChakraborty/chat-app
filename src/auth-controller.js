@@ -27,6 +27,10 @@ class AuthController {
     this.#updateDatabase(() => onDatabaseUpdate(userHash));
   }
 
+  getUsername(userHash) {
+    return this.#users.getUsername(userHash);
+  }
+
   getUserHash(username) {
     return this.#users.getUserHash(username);
   }

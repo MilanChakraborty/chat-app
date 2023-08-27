@@ -1,7 +1,6 @@
 const { describe, it, beforeEach } = require('node:test');
 const request = require('supertest');
 const { createAndSetupApp } = require('../../src/app');
-const assert = require('assert');
 
 let app = null;
 
@@ -40,6 +39,24 @@ describe('POST /login', () => {
       .expect(302)
       .expect('location', '/')
       .expect('Set-Cookie', 'auth=userHash; Path=/')
+      .end(done);
+  });
+});
+
+describe('GET /login-details', () => {
+  it('Should give username and login status', (ctx, done) => {
+    const getUsername = ctx.mock.fn(() => 'milan');
+    const isUserPresent = ctx.mock.fn(() => true);
+    const authController = { getUsername, isUserPresent };
+
+    const app = createAndSetupApp();
+    app.context = { authController };
+
+    request(app)
+      .get('/login-details')
+      .set('Cookie', 'auth=userHash')
+      .expect(200)
+      .expect({ isLoggedIn: true, username: 'milan' })
       .end(done);
   });
 });

@@ -15,6 +15,13 @@ describe('Users', () => {
     });
   });
 
+  describe('getUsername', () => {
+    it('Should give the username of the user when hash is provided', () => {
+      const users = new Users({ userHash: { username: 'milan' } });
+      assert.strictEqual(users.getUsername('userHash'), 'milan');
+    });
+  });
+
   describe('add User', () => {
     it('Should be able to add a new user', () => {
       const users = new Users();

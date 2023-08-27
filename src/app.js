@@ -5,9 +5,13 @@ const {
   handleHomePageRequest,
   respondNotFound,
 } = require('./handlers/resource-route-handlers');
-const { handleLoginRequest } = require('./handlers/auth-handlers.js');
+const {
+  handleLoginRequest,
+  handleLoginDetailsRequest,
+} = require('./handlers/auth-handlers.js');
 
 const addAuthHandlers = (app) => {
+  app.get('/login-details', handleLoginDetailsRequest);
   app.post('/login', handleLoginRequest);
 };
 

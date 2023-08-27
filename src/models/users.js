@@ -28,6 +28,10 @@ class Users {
     return userHash;
   }
 
+  getUsername(userHash) {
+    return this.#users[userHash].username;
+  }
+
   get details() {
     return this.#users;
   }

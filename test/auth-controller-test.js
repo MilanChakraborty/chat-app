@@ -54,6 +54,17 @@ describe('Auth Controller', () => {
     );
   });
 
+  it('should be able to give username when userHash is provided', (ctx) => {
+    const getUsername = ctx.mock.fn(() => 'milan');
+    const users = { getUsername };
+    const dataStorage = {};
+
+    const authController = new AuthController(users, dataStorage);
+    assert.strictEqual(authController.getUsername('userHash'), 'milan');
+    assert.strictEqual(getUsername.mock.callCount(), 1);
+    assert.strictEqual(getUsername.mock.calls[0].arguments[0], 'userHash');
+  });
+
   it('should be able to get hash of user', (ctx) => {
     const getUserHash = ctx.mock.fn();
     const users = { getUserHash };
