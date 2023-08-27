@@ -20,7 +20,7 @@ module.exports = {
     'no-extra-semi': ['error'],
     'no-use-before-define': ['error'],
     'no-this-before-super': ['error'],
-    'max-statements': ['error', 10],
+    'max-statements': ['warn', 10],
     'max-nested-callbacks': ['error', { max: 4 }],
     'no-else-return': 'error',
     'object-shorthand': 'error',

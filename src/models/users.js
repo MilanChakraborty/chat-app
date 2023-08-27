@@ -6,12 +6,12 @@ class Users {
     this.#users = users;
   }
 
-  #getUserHash(username) {
+  getUserHash(username) {
     return createHash('md5').update(username).digest('hex');
   }
 
   validateUserLogin(username, password) {
-    const userHash = this.#getUserHash(username);
+    const userHash = this.getUserHash(username);
     const userDetails = this.#users[userHash];
     if (!userDetails) return false;
 
@@ -23,7 +23,7 @@ class Users {
   }
 
   addUser(username, password) {
-    const userHash = this.#getUserHash(username);
+    const userHash = this.getUserHash(username);
     this.#users[userHash] = { username, password };
     return userHash;
   }

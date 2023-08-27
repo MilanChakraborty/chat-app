@@ -7,21 +7,24 @@ const {
 
 describe('Auth Controller', () => {
   it('should be able to add User', (ctx) => {
-    const addUser = ctx.mock.fn();
+    const addUser = ctx.mock.fn(() => 'userHash');
     const updateDatabase = ctx.mock.fn();
     const dataStorage = { updateDatabase };
     const users = { addUser, details: 'Fake Data' };
+    const callback = ctx.mock.fn();
 
     const authController = new AuthController(users, dataStorage);
-    authController.addUser('milan', '1234', 'Fake Callback');
+    authController.addUser('milan', '1234', callback);
+
+    const [, onDatabaseUpdate] = updateDatabase.mock.calls[0].arguments;
+    onDatabaseUpdate();
 
     assert.strictEqual(addUser.mock.callCount(), 1);
     assert.deepStrictEqual(addUser.mock.calls[0].arguments, ['milan', '1234']);
     assert.strictEqual(updateDatabase.mock.callCount(), 1);
-    assert.deepStrictEqual(updateDatabase.mock.calls[0].arguments, [
-      'Fake Data',
-      'Fake Callback',
-    ]);
+    assert.strictEqual(updateDatabase.mock.calls[0].arguments[0], 'Fake Data');
+    assert.strictEqual(callback.mock.callCount(), 1);
+    assert.strictEqual(callback.mock.calls[0].arguments[0], 'userHash');
   });
 
   it('should be able to check whether user Present', (ctx) => {
@@ -50,6 +53,18 @@ describe('Auth Controller', () => {
       'userHash'
     );
   });
+
+  it('should be able to get hash of user', (ctx) => {
+    const getUserHash = ctx.mock.fn();
+    const users = { getUserHash };
+    const dataStorage = {};
+
+    const authController = new AuthController(users, dataStorage);
+    authController.getUserHash('milan');
+
+    assert.strictEqual(getUserHash.mock.callCount(), 1);
+    assert.strictEqual(getUserHash.mock.calls[0].arguments[0], 'milan');
+  });
 });
 
 describe('Create Auth Controller', () => {
@@ -60,7 +75,7 @@ describe('Create Auth Controller', () => {
     const storagePath = {};
 
     const authController = createAuthController(storagePath, fs);
-    
+
     assert.strictEqual(authController.isUserPresent('userHash'), true);
   });
 });

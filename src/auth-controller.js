@@ -23,8 +23,12 @@ class AuthController {
   }
 
   addUser(username, password, onDatabaseUpdate) {
-    this.#users.addUser(username, password);
-    this.#updateDatabase(onDatabaseUpdate);
+    const userHash = this.#users.addUser(username, password);
+    this.#updateDatabase(() => onDatabaseUpdate(userHash));
+  }
+
+  getUserHash(username) {
+    return this.#users.getUserHash(username);
   }
 }
 

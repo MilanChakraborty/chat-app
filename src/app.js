@@ -5,6 +5,11 @@ const {
   handleHomePageRequest,
   respondNotFound,
 } = require('./handlers/resource-route-handlers');
+const { handleLoginRequest } = require('./handlers/auth-handlers.js');
+
+const addAuthHandlers = (app) => {
+  app.post('/login', handleLoginRequest);
+};
 
 const addMiddlewares = (app) => {
   app.use(requestLogger);
@@ -14,6 +19,7 @@ const addMiddlewares = (app) => {
 };
 
 const addRouteHandlers = (app) => {
+  addAuthHandlers(app);
   app.get('/', handleHomePageRequest);
   app.use(express.static('public'));
   app.use(respondNotFound);
