@@ -1,3 +1,6 @@
+const DataStorage = require('./data-storage');
+const { createUsers } = require('./models/users');
+
 class AuthController {
   #users;
   #dataStorage;
@@ -16,7 +19,7 @@ class AuthController {
   }
 
   isUserPresent(userHash) {
-    this.#users.isUserPresent(userHash);
+    return this.#users.isUserPresent(userHash);
   }
 
   addUser(username, password, onDatabaseUpdate) {
@@ -25,4 +28,12 @@ class AuthController {
   }
 }
 
-module.exports = { AuthController };
+const createAuthController = (storagePath, fs) => {
+  const authStorage = new DataStorage(storagePath, fs);
+  authStorage.init();
+  const users = createUsers(authStorage.data);
+
+  return new AuthController(users, authStorage);
+};
+
+module.exports = { AuthController, createAuthController };

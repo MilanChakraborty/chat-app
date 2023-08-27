@@ -1,6 +1,9 @@
 const { describe, it } = require('node:test');
 const assert = require('assert');
-const { AuthController } = require('../src/auth-controller');
+const {
+  AuthController,
+  createAuthController,
+} = require('../src/auth-controller');
 
 describe('Auth Controller', () => {
   it('should be able to add User', (ctx) => {
@@ -46,5 +49,18 @@ describe('Auth Controller', () => {
       validateUserLogin.mock.calls[0].arguments[0],
       'userHash'
     );
+  });
+});
+
+describe('Create Auth Controller', () => {
+  it('Should create a Auth controller with given data', (ctx) => {
+    const existsSync = ctx.mock.fn(() => true);
+    const readFileSync = ctx.mock.fn(() => '{"userHash":{}}');
+    const fs = { existsSync, readFileSync };
+    const storagePath = {};
+
+    const authController = createAuthController(storagePath, fs);
+    
+    assert.strictEqual(authController.isUserPresent('userHash'), true);
   });
 });
