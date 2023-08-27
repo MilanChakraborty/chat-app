@@ -29,3 +29,27 @@ body {
   color: var(--nile-blue);
   text-align: center;
 }
+
+.auth-button {
+  border-bottom: 1px solid var(--nile-blue);
+}
+
+.auth-button:hover {
+  cursor: pointer;
+}
+
+.auth {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+  font-size: 0.9em;
+  color: var(--nile-blue);
+  align-items: flex-end;
+  position: absolute;
+  right: 1em;
+  top: 0.6em;
+}
+
+.auth * {
+  margin: 0%;
+}

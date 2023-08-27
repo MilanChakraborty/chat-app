@@ -38,4 +38,13 @@ const handleLoginDetailsRequest = (req, res) => {
   res.json({ username, isLoggedIn });
 };
 
-module.exports = { handleLoginRequest, handleLoginDetailsRequest };
+const handleLogoutRequest = (request, response) => {
+  response.clearCookie('auth');
+  redirectToHomePage(request, response);
+};
+
+module.exports = {
+  handleLoginRequest,
+  handleLoginDetailsRequest,
+  handleLogoutRequest,
+};

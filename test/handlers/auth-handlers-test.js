@@ -60,3 +60,20 @@ describe('GET /login-details', () => {
       .end(done);
   });
 });
+
+describe('POST /logout', () => {
+  it('Should set the cookie with old expiry date', (_, done) => {
+    const todoController = {};
+    const app = createAndSetupApp(todoController);
+
+    request(app)
+      .post('/logout')
+      .expect(
+        'set-cookie',
+        'auth=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT'
+      )
+      .expect(302)
+      .expect('location', '/')
+      .end(done);
+  });
+});

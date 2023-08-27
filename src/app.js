@@ -8,11 +8,13 @@ const {
 const {
   handleLoginRequest,
   handleLoginDetailsRequest,
+  handleLogoutRequest,
 } = require('./handlers/auth-handlers.js');
 
 const addAuthHandlers = (app) => {
   app.get('/login-details', handleLoginDetailsRequest);
   app.post('/login', handleLoginRequest);
+  app.post('/logout', handleLogoutRequest);
 };
 
 const addMiddlewares = (app) => {
