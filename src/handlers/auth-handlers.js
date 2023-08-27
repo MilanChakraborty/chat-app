@@ -12,7 +12,7 @@ const invalidPassword = (authController, userHash, username, password) =>
 
 const handleLoginRequest = (req, res) => {
   const { username, password } = req.body;
-  const { authController } = req.app.context;
+  const { authController, chatsController } = req.app.context;
   const userHash = authController.getUserHash(username);
 
   if (invalidPassword(authController, userHash, username, password))
@@ -24,8 +24,10 @@ const handleLoginRequest = (req, res) => {
   }
 
   authController.addUser(username, password, (userHash) => {
-    res.cookie('auth', userHash);
-    redirectToHomePage(req, res);
+    chatsController.addUser(username, () => {
+      res.cookie('auth', userHash);
+      redirectToHomePage(req, res);
+    });
   });
 };
 

@@ -49,7 +49,6 @@ const createChatsController = (storagePath, fs) => {
   const chatsStorage = new DataStorage(storagePath, fs);
   chatsStorage.init();
   const chatsData = formatChatsData(chatsStorage.data);
-  console.log(chatsData);
   const chats = createChats(chatsData);
 
   return new ChatsController(chats, chatsStorage);
