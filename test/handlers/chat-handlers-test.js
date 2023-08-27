@@ -22,3 +22,41 @@ describe('GET /chat-heads', () => {
       .end(done);
   });
 });
+
+describe('GET /user-exists/:username', () => {
+  it('Should return true if userexists or false', (ctx, done) => {
+    const isUserPresent = ctx.mock.fn(() => true);
+    const authController = { isUserPresent };
+    const chatsController = { isUserPresent };
+
+    const app = createAndSetupApp();
+    app.context = { authController, chatsController };
+
+    request(app)
+      .get('/user-exists/milan')
+      .set('Cookie', 'auth=userHash')
+      .expect(200)
+      .expect({ isUserPresent: true })
+      .end(done);
+  });
+});
+
+describe('GET /chat-history/:withUser', () => {
+  it('Should return true if userexists or false', (ctx, done) => {
+    const isUserPresent = ctx.mock.fn(() => true);
+    const getUsername = ctx.mock.fn(() => 'milan');
+    const getDirectMessages = ctx.mock.fn(() => []);
+    const authController = { isUserPresent, getUsername };
+    const chatsController = { isUserPresent, getDirectMessages };
+
+    const app = createAndSetupApp();
+    app.context = { authController, chatsController };
+
+    request(app)
+      .get('/chat-history/raj')
+      .set('Cookie', 'auth=userHash')
+      .expect(200)
+      .expect([])
+      .end(done);
+  });
+});

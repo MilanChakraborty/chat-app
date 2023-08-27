@@ -38,10 +38,12 @@ class Controller {
   #view;
   #chatService;
   #inputController;
+  #connectedTo;
   constructor(chatService, view, inputController) {
     this.#chatService = chatService;
     this.#view = view;
     this.#inputController = inputController;
+    this.#connectedTo = null;
   }
 
   #fetchAndRenderLoginDetails() {
@@ -56,6 +58,20 @@ class Controller {
     });
   }
 
+  #fetchAndRenderChatHistory() {
+    this.#chatService.getChatHistory(this.#connectedTo, (chats) => {
+      this.#view.renderChatHistory(this.#connectedTo, chats);
+    });
+  }
+
+  #onConnect(connectedTo) {
+    this.#connectedTo = connectedTo;
+    this.#chatService.isUserExists(connectedTo, ({ isUserPresent }) => {
+      if (isUserPresent) return this.#fetchAndRenderChatHistory();
+      alert('User Doesnot Exist');
+    });
+  }
+
   #requestLogout() {
     this.#chatService.requestLogout();
   }
@@ -64,7 +80,7 @@ class Controller {
     this.#fetchAndRenderLoginDetails();
     this.#fetchAndRenderChatHeads();
     this.#view.addListener('logout', () => this.#requestLogout('logout'));
-    this.#inputController.onConnect((connectTo) => console.log(connectTo));
+    this.#inputController.onConnect((connectTo) => this.#onConnect(connectTo));
     this.#inputController.onSend((message) => console.log(message));
   }
 }

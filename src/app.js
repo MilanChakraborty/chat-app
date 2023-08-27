@@ -11,10 +11,20 @@ const {
   handleLogoutRequest,
   validateUserLogin,
 } = require('./handlers/auth-handlers.js');
-const { handleChatHeadsRequest } = require('./handlers/chat-handlers.js');
+const {
+  handleChatHeadsRequest,
+  handleUserExistsRequest,
+  handleChatHistoryRequest,
+} = require('./handlers/chat-handlers.js');
 
 const addChatHandlers = (app) => {
   app.get('/chat-heads', validateUserLogin, handleChatHeadsRequest);
+  app.get('/user-exists/:username', validateUserLogin, handleUserExistsRequest);
+  app.get(
+    '/chat-history/:withUser',
+    validateUserLogin,
+    handleChatHistoryRequest
+  );
 };
 
 const addAuthHandlers = (app) => {

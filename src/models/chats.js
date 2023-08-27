@@ -27,8 +27,8 @@ class Chats {
     const usersToken = Object.entries(this.#usersToken).find(
       areParticipantsPresent
     );
-    const [token] = usersToken || [];
 
+    const [token] = usersToken || [];
     return token;
   }
 

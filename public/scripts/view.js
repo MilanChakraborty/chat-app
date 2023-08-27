@@ -1,11 +1,13 @@
 class View {
   #authContainer;
   #chatHeadsElement;
+  #chatHistoryContainer;
   #listeners;
 
-  constructor(authContainer, chatHeadsElement) {
+  constructor(authContainer, chatHeadsElement, chatHistoryContainer) {
     this.#authContainer = authContainer;
     this.#chatHeadsElement = chatHeadsElement;
+    this.#chatHistoryContainer = chatHistoryContainer;
     this.#listeners = {};
   }
 
@@ -43,6 +45,24 @@ class View {
     return chatHeadElement;
   }
 
+  #createConnectedToHeader(connectedTo) {
+    const header = document.createElement('header');
+    const headingElement = document.createElement('h1');
+    headingElement.innerText = `____  ${connectedTo}  ____`;
+    headingElement.classList.add('connect-to-header');
+    header.append(headingElement);
+
+    return header;
+  }
+
+  #createChatElement(chat) {
+    const chatElement = document.createElement('p');
+    chatElement.innerText = chat;
+    chatElement.classList.add('chat');
+
+    return chatElement;
+  }
+
   renderAuthSection({ username }) {
     this.#addUsernameElement(username);
     this.#addLogoutButton();
@@ -55,5 +75,11 @@ class View {
     );
 
     this.#chatHeadsElement.append(...chatHeadElements);
+  }
+
+  renderChatHistory(connectedTo, chats) {
+    const connectedToHeader = this.#createConnectedToHeader(connectedTo);
+    const chatsElements = chats.map((chat) => this.#createChatElement(chat));
+    this.#chatHistoryContainer.append(connectedToHeader, ...chatsElements);
   }
 }

@@ -1,7 +1,10 @@
 const main = () => {
   const authContainer = document.querySelector('.auth');
   const chatHeadsElement = document.querySelector('.chat-heads');
-  const view = new View(authContainer, chatHeadsElement);
+  const chatHistoryContainer = document.querySelector(
+    '.chat-history-container'
+  );
+  const view = new View(authContainer, chatHeadsElement, chatHistoryContainer);
   const chatService = new ChatService();
   const inputController = new InputController();
 
