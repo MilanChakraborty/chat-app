@@ -1,6 +1,9 @@
 const { describe, it } = require('node:test');
 const assert = require('assert');
-const { ChatsController } = require('../src/chats-controller');
+const {
+  ChatsController,
+  createChatsController,
+} = require('../src/chats-controller');
 
 describe('ChatsController', () => {
   it('Should be able to add User', (ctx) => {
@@ -74,5 +77,35 @@ describe('ChatsController', () => {
       registerDirectMessage.mock.calls[0].arguments[0],
       'Fake Message Details'
     );
+  });
+});
+
+describe('Create Chats Controller', () => {
+  it('Should create chats Controller with empty chats when data from storage is empty', (ctx) => {
+    const existsSync = ctx.mock.fn(() => true);
+    const readFileSync = ctx.mock.fn(() => '{}');
+    const fs = { existsSync, readFileSync };
+    const storagePath = {};
+
+    const chatsController = createChatsController(storagePath, fs);
+
+    assert.strictEqual(chatsController.isUserPresent('milan'), false);
+  });
+
+  it('Should create chats Controller with the given data when data from storage is not empty', (ctx) => {
+    const chatsDetails = {
+      messagesDetails: {},
+      usersDetails: { milan: [] },
+      usersTokenData: {},
+    };
+
+    const existsSync = ctx.mock.fn(() => true);
+    const readFileSync = ctx.mock.fn(() => JSON.stringify(chatsDetails));
+    const fs = { existsSync, readFileSync };
+    const storagePath = {};
+
+    const chatsController = createChatsController(storagePath, fs);
+
+    assert.strictEqual(chatsController.isUserPresent('milan'), true);
   });
 });

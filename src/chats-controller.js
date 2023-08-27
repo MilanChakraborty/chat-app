@@ -1,3 +1,6 @@
+const DataStorage = require('./data-storage');
+const { createChats } = require('./models/chats');
+
 class ChatsController {
   #chats;
   #chatsStorage;
@@ -34,4 +37,22 @@ class ChatsController {
   }
 }
 
-module.exports = { ChatsController };
+const isEmpty = (rawChatsData) => Object.keys(rawChatsData).length === 0;
+
+const formatChatsData = (rawChatsData) => {
+  if (isEmpty(rawChatsData))
+    return { messagesDetails: {}, usersDetails: {}, usersTokenData: {} };
+  return rawChatsData;
+};
+
+const createChatsController = (storagePath, fs) => {
+  const chatsStorage = new DataStorage(storagePath, fs);
+  chatsStorage.init();
+  const chatsData = formatChatsData(chatsStorage.data);
+  console.log(chatsData);
+  const chats = createChats(chatsData);
+
+  return new ChatsController(chats, chatsStorage);
+};
+
+module.exports = { ChatsController, createChatsController };
