@@ -17,9 +17,37 @@ describe('Resource Route Handlers', () => {
   });
 
   describe('GET /', () => {
-    beforeEach(() => (app = createAndSetupApp()));
-    it('Should serve the home page', (_, done) => {
-      request(app).get('/').expect(200).end(done);
+    it('Should redirect to login page when no cookie is provided', (_, done) => {
+      request(app)
+        .get('/')
+        .expect(302)
+        .expect('location', '/pages/login.html')
+        .end(done);
+    });
+
+    it('Should redirect to login page when cookie provided is not valid', (ctx, done) => {
+      const isUserPresent = ctx.mock.fn(() => false);
+      const authController = { isUserPresent };
+      app.context = { authController };
+
+      request(app)
+        .get('/')
+        .set('Cookie', 'auth=userHash')
+        .expect(302)
+        .expect('location', '/pages/login.html')
+        .end(done);
+    });
+
+    it('Should serve home page when valid cookie is provided', (ctx, done) => {
+      const isUserPresent = ctx.mock.fn(() => true);
+      const authController = { isUserPresent };
+      app.context = { authController };
+
+      request(app)
+        .get('/')
+        .set('Cookie', 'auth=userHash')
+        .expect(200)
+        .end(done);
     });
   });
 });
