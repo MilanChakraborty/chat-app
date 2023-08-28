@@ -14,6 +14,14 @@ const readPassword = () => {
   return password;
 };
 
+const alertAuthenticationFailed = ({ invalidPassword }) => {
+  if (invalidPassword) {
+    alert('Password Entered Was Incorrect');
+    return;
+  }
+  alert('Username Doesnot Exist, Please Signup');
+};
+
 const sendLoginRequest = (event) => {
   event.preventDefault();
   const username = readUsername();
@@ -31,13 +39,7 @@ const sendLoginRequest = (event) => {
       }
       return res.json();
     })
-    .then(({ invalidPassword }) => {
-      if (invalidPassword) {
-        alert('Password Entered Was Incorrect');
-        return;
-      }
-      alert('Username Doesnot Exist, Please Signup');
-    })
+    .then(alertAuthenticationFailed)
     .catch((err) => err);
 };
 

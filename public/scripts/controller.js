@@ -58,10 +58,17 @@ class ChatAppManager {
     });
   }
 
-  #fetchAndRenderChatHistory() {
+  #fetchAndRenderChatPage() {
     if (!this.#connectedTo) return;
     this.#chatService.getChatHistory(this.#connectedTo, (chats) => {
-      this.#view.renderChatHistory(this.#connectedTo, chats);
+      this.#view.renderChatPage(this.#connectedTo, chats);
+    });
+  }
+
+  #fetchAndUpdateChatHistory() {
+    if (!this.#connectedTo) return;
+    this.#chatService.getChatHistory(this.#connectedTo, (chats) => {
+      this.#view.updateChatHistory(this.#connectedTo, chats);
     });
   }
 
@@ -69,7 +76,7 @@ class ChatAppManager {
     this.#chatService.isUserExists(connectedTo, ({ isUserPresent }) => {
       if (isUserPresent) {
         this.#connectedTo = connectedTo;
-        this.#fetchAndRenderChatHistory();
+        this.#fetchAndRenderChatPage();
         return;
       }
       alert('User Doesnot Exist');
@@ -80,7 +87,7 @@ class ChatAppManager {
     if (!this.#connectedTo)
       return alert('Please Connect To Someone to Send Message');
     this.#chatService.sendDirectMessage(this.#connectedTo, message, () => {
-      this.#fetchAndRenderChatHistory();
+      this.#fetchAndRenderChatPage();
     });
   }
 
@@ -99,6 +106,6 @@ class ChatAppManager {
     this.#inputController.onConnect((connectTo) => this.#onConnect(connectTo));
     this.#inputController.onSend((message) => this.#onSend(message));
     setInterval(() => this.#fetchAndRenderChatHeads(), 1000);
-    setInterval(() => this.#fetchAndRenderChatHistory(), 1000);
+    setInterval(() => this.#fetchAndUpdateChatHistory(), 1000);
   }
 }

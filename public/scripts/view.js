@@ -3,12 +3,16 @@ class View {
   #chatHeadsElement;
   #chatHistoryContainer;
   #listeners;
+  #scrollbarPosition;
+  #chatsContainer;
 
   constructor(authContainer, chatHeadsElement, chatHistoryContainer) {
     this.#authContainer = authContainer;
     this.#chatHeadsElement = chatHeadsElement;
     this.#chatHistoryContainer = chatHistoryContainer;
     this.#listeners = {};
+    this.#scrollbarPosition = null;
+    this.#chatsContainer = null;
   }
 
   addListener(eventName, callback) {
@@ -109,15 +113,27 @@ class View {
     this.#chatHeadsElement.append(...chatHeadElements);
   }
 
-  renderChatHistory(connectedTo, chats) {
+  renderChatPage(connectedTo, chats) {
     this.#removeExistingElements(this.#chatHistoryContainer);
     const connectedToHeader = this.#createConnectedToHeader(connectedTo);
     const chatsContainer = this.#createChatsContainer();
+    this.#chatsContainer = chatsContainer;
     const chatsElements = chats.map((chat) =>
       this.#createChatElement(chat, connectedTo)
     );
 
     chatsContainer.append(...chatsElements);
     this.#chatHistoryContainer.append(connectedToHeader, chatsContainer);
+  }
+
+  updateChatHistory(connectedTo, chats) {
+    this.#scrollbarPosition = this.#chatsContainer.scrollTop;
+    this.#removeExistingElements(this.#chatsContainer);
+
+    const chatsElements = chats.map((chat) =>
+      this.#createChatElement(chat, connectedTo)
+    );
+    this.#chatsContainer.append(...chatsElements);
+    this.#chatsContainer.scrollTop = this.#scrollbarPosition;
   }
 }
