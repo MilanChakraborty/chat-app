@@ -177,6 +177,8 @@ body {
 .chats-container {
   display: flex;
   flex-direction: column;
+  height: 35em;
+  overflow: scroll;
 }
 
 .send-message {

@@ -59,6 +59,7 @@ class Controller {
   }
 
   #fetchAndRenderChatHistory() {
+    if (!this.#connectedTo) return;
     this.#chatService.getChatHistory(this.#connectedTo, (chats) => {
       this.#view.renderChatHistory(this.#connectedTo, chats);
     });
@@ -94,5 +95,7 @@ class Controller {
     );
     this.#inputController.onConnect((connectTo) => this.#onConnect(connectTo));
     this.#inputController.onSend((message) => this.#onSend(message));
+    setInterval(() => this.#fetchAndRenderChatHeads(), 1000);
+    setInterval(() => this.#fetchAndRenderChatHistory(), 1000);
   }
 }
