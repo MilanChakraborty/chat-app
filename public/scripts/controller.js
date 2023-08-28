@@ -66,9 +66,12 @@ class Controller {
   }
 
   #onConnect(connectedTo) {
-    this.#connectedTo = connectedTo;
     this.#chatService.isUserExists(connectedTo, ({ isUserPresent }) => {
-      if (isUserPresent) return this.#fetchAndRenderChatHistory();
+      if (isUserPresent) {
+        this.#connectedTo = connectedTo;
+        this.#fetchAndRenderChatHistory();
+        return;
+      }
       alert('User Doesnot Exist');
     });
   }
