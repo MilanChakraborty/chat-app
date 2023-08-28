@@ -35,8 +35,8 @@ body {
   margin: 0 auto;
   background-color: var(--white);
   box-shadow: 0px 0px 12px hsl(0, 0%, 40%);
-  width: 30em;
-  height: 25em;
+  width: 35em;
+  height: 30em;
   border-radius: 10px;
 }
 
