@@ -8,7 +8,7 @@ const main = () => {
   const chatService = new ChatService();
   const inputController = new InputController();
 
-  const controller = new Controller(chatService, view, inputController);
+  const controller = new ChatAppManager(chatService, view, inputController);
   controller.start();
 };
 

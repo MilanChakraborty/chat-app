@@ -23,6 +23,11 @@ body {
   font-size: 16px;
 }
 
+input[type='submit']:hover {
+  cursor: pointer;
+  background-color: hsl(8, 64%, 45%);
+}
+
 .page-header {
   font-size: 50px;
   font-weight: 300;
@@ -174,6 +179,10 @@ body {
   color: var(--nile-blue);
   padding: 0.5em;
   border-bottom: 1px dotted hsl(0, 0%, 50%);
+}
+
+.chat-head:hover {
+  cursor: pointer;
 }
 
 .chats-container {

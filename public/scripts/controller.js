@@ -34,7 +34,7 @@ class InputController {
   }
 }
 
-class Controller {
+class ChatAppManager {
   #view;
   #chatService;
   #inputController;
