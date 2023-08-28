@@ -2,7 +2,7 @@
   --white: white;
   --black: rgb(0, 0, 0);
   --seashell: rgb(238, 241, 243);
-  --nile-blue: rgb(22, 60, 77);
+  --text-color: rgb(62, 74, 83);
   --light-carmine-pink: rgb(224, 106, 124);
   --brandy-punch: hsl(35, 60%, 55%);
   --button-color: rgb(214, 88, 69);
@@ -19,24 +19,19 @@
 }
 
 body {
-  background-color: var(--seashell);
+  background-color: rgb(225, 225, 222);
   font-size: 16px;
-}
-
-input[type='submit']:hover {
-  cursor: pointer;
-  background-color: hsl(8, 64%, 45%);
 }
 
 .page-header {
   font-size: 50px;
   font-weight: 300;
-  color: var(--nile-blue);
+  color: var(--text-color);
   text-align: center;
 }
 
 .auth-button {
-  border-bottom: 1px solid var(--nile-blue);
+  border-bottom: 1px solid var(--text-color);
 }
 
 .auth-button:hover {
@@ -48,7 +43,7 @@ input[type='submit']:hover {
   flex-direction: column;
   gap: 0.2em;
   font-size: 0.9em;
-  color: var(--nile-blue);
+  color: var(--text-color);
   align-items: flex-end;
   position: absolute;
   right: 1em;
@@ -77,7 +72,7 @@ input[type='submit']:hover {
   margin-top: 0.5em;
   text-align: center;
   font-size: 2em;
-  color: var(--nile-blue);
+  color: var(--text-color);
 }
 
 .chatheads-container {
@@ -108,13 +103,17 @@ input[type='submit']:hover {
 #connect-button {
   border-radius: 5px;
   color: var(--white);
-  background-color: var(--brandy-punch);
+  background-color: hsl(127, 52%, 50%);
   width: 5em;
 }
 
+#connect-button:hover {
+  cursor: pointer;
+  background-color: hsl(127, 52%, 45%);
+}
+
 .connection-container {
-  background-color: var(--seashell);
-  border: 1px solid hsl(0, 0%, 60%);
+  background-color: hsl(60, 5%, 78%);
   display: grid;
   grid-template-rows: 10fr 1fr;
 }
@@ -132,8 +131,6 @@ input[type='submit']:hover {
 .chat-history-container {
   background-color: rgb(221, 219, 210);
   width: 90%;
-  border: 1px solid black;
-  box-shadow: 0 0 5px hsl(0, 0%, 50%);
   margin: 2em auto 0em auto;
 }
 
@@ -148,15 +145,20 @@ input[type='submit']:hover {
 
 #send-button {
   width: 5em;
-  background-color: var(--brandy-punch);
+  background-color: hsl(127, 52%, 50%);
   color: var(--white);
   border-radius: 5px;
 }
 
+#send-button:hover {
+  cursor: pointer;
+  background-color: hsl(127, 52%, 45%);
+}
+
 .connect-to-header {
-  color: var(--nile-blue);
+  color: white;
   font-size: 1.8em;
-  background-color: hsl(204, 17%, 80%);
+  background-color: hsl(163, 40%, 45%);
   padding-bottom: 0.5em;
   font-weight: 300;
   width: 100%;
@@ -176,7 +178,7 @@ input[type='submit']:hover {
   width: 100%;
   font-size: 1.5em;
   font-weight: 300;
-  color: var(--nile-blue);
+  color: var(--text-color);
   padding: 0.5em;
   border-bottom: 1px dotted hsl(0, 0%, 50%);
 }
@@ -205,10 +207,10 @@ input[type='submit']:hover {
 
 .message {
   font-size: 1.1em;
-  color: var(--nile-blue);
+  color: var(--text-color);
 }
 
 .timestamp {
   font-size: 0.5em;
-  color: var(--nile-blue);
+  color: var(--text-color);
 }

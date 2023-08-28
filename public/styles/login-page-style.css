@@ -2,7 +2,7 @@
   --white: white;
   --black: rgb(0, 0, 0);
   --seashell: rgb(238, 241, 243);
-  --nile-blue: rgb(22, 60, 77);
+  --text-color: rgb(62, 74, 83);
   --light-carmine-pink: rgb(224, 106, 124);
   --brandy-punch: rgb(194, 134, 48);
   --comet: rgb(95, 81, 122);
@@ -25,7 +25,7 @@ body {
 
 .page-header {
   width: 100%;
-  color: var(--nile-blue);
+  color: var(--text-color);
   text-align: center;
 }
 
@@ -41,20 +41,20 @@ body {
 }
 
 .login-button {
-  background-color: var(--brandy-punch);
+  background-color: hsl(127, 52%, 50%);
   color: var(--white);
   border-radius: 8px;
 }
 
 .username-instructions {
-  color: var(--nile-blue);
+  color: var(--text-color);
   text-align: center;
   font-size: 0.9em;
 }
 
 .login-button:hover {
   cursor: pointer;
-  background-color: hsl(35, 60%, 40%);
+  background-color: hsl(127, 52%, 45%);
 }
 
 #login-form {
