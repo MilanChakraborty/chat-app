@@ -1,20 +1,19 @@
 <html>
 
 <head>
-  <title>Login</title>
-  <link rel="stylesheet" href="/styles/login-page-style.css">
-  <script src="/scripts/login.js"></script>
+  <title>SignUp</title>
+  <link rel="stylesheet" href="/styles/signup-page-style.css">
+  <script src="/scripts/signup.js"></script>
 </head>
 
 <body>
   <main class="page">
-    <h1 class='page-header'>Login</h1>
-    <form action="/login" method='post' id='login-form'>
+    <h1 class='page-header'>SignUp</h1>
+    <form action="/signup" method='post' id='signup-form'>
       <p class='username-instructions'>"Please Avoid Spaces, Special Characters and Numbers in Your Username"</p>
       <input type="text" id='username-box' name='username' placeholder='Username' pattern='[A-Za-z]+' required />
       <input type="password" id='password-box' name='password' placeholder='Password' required minlength='4'>
-      <input type="submit" value="Login" class='login-button'>
-      <p id='create-user-box'>New To Step Chat? <a href="/pages/signup.html">Create User</a></p>
+      <input type="submit" value="SignUp" class='signup-button'>
     </form>
   </main>
 </body>

@@ -97,6 +97,7 @@ body {
 
 #connect-input-box {
   width: 18em;
+  padding: 0.5em;
 }
 
 #connect-button {
@@ -137,6 +138,7 @@ body {
 
 #send-input-box {
   width: 50em;
+  padding: 0.5em;
 }
 
 #send-button {
