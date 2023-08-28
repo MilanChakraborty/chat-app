@@ -2,19 +2,21 @@ const redirectToHomePage = (_, res) => {
   res.redirect('/');
 };
 
-const sendAuthenticationFailed = (_, res) => {
-  res.status(401).json({ passwordInvalid: true });
-};
-
-const invalidPassword = (authController, userHash, username, password) =>
-  authController.isUserPresent(userHash) &&
-  !authController.validateUserLogin(username, password);
-
 const redirectToLoginPage = (_, res) => {
   res.redirect('/pages/login.html');
 };
 
 const userLoggedIn = (req) => req.cookies.auth !== undefined;
+
+const sendUserNotExists = (_, res) => {
+  res.status(401);
+  res.json({ userNotExists: true, invalidPassword: null });
+};
+
+const sendInvalidPassword = (_, res) => {
+  res.status(401);
+  res.json({ invalidPassword: true, userNotExists: false });
+};
 
 const isValidUser = (req) => {
   const { authController } = req.app.context;
@@ -30,15 +32,27 @@ const validateUserLogin = (req, res, next) => {
 
 const handleLoginRequest = (req, res) => {
   const { username, password } = req.body;
+  const { authController } = req.app.context;
+  const userHash = authController.getUserHash(username);
+
+  if (!authController.isUserPresent(userHash))
+    return sendUserNotExists(req, res);
+
+  if (!authController.validateUserLogin(username, password))
+    return sendInvalidPassword(req, res);
+
+  res.cookie('auth', userHash);
+  return redirectToHomePage(req, res);
+};
+
+const handleSignupRequest = (req, res) => {
+  const { username, password } = req.body;
   const { authController, chatsController } = req.app.context;
   const userHash = authController.getUserHash(username);
 
-  if (invalidPassword(authController, userHash, username, password))
-    return sendAuthenticationFailed(req, res);
-
-  if (authController.validateUserLogin(username, password)) {
-    res.cookie('auth', userHash);
-    return redirectToHomePage(req, res);
+  if (authController.isUserPresent(userHash)) {
+    res.json({ userExists: true });
+    return;
   }
 
   authController.addUser(username, password, (userHash) => {
@@ -68,4 +82,5 @@ module.exports = {
   handleLoginRequest,
   handleLoginDetailsRequest,
   handleLogoutRequest,
+  handleSignupRequest,
 };

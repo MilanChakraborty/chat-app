@@ -10,6 +10,7 @@ const {
   handleLoginDetailsRequest,
   handleLogoutRequest,
   validateUserLogin,
+  handleSignupRequest,
 } = require('./handlers/auth-handlers.js');
 const {
   handleChatHeadsRequest,
@@ -37,6 +38,7 @@ const addChatHandlers = (app) => {
 const addAuthHandlers = (app) => {
   app.get('/login-details', handleLoginDetailsRequest);
   app.post('/login', handleLoginRequest);
+  app.post('/signup', handleSignupRequest);
   app.post('/logout', handleLogoutRequest);
 };
 

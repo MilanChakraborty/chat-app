@@ -12,15 +12,35 @@ describe('POST /login', () => {
     const getUserHash = ctx.mock.fn(() => 'userHash');
     const authController = { isUserPresent, validateUserLogin, getUserHash };
 
-    const userDetails = 'username=milan&password=1234';
+    const userDetails = { username: 'milan', password: 1234 };
 
     app.context = { authController };
     request(app)
       .post('/login')
       .send(userDetails)
+      .set('Content-type', 'application/json')
       .expect(401)
       .expect('Content-Type', /application\/json/)
-      .expect({ passwordInvalid: true })
+      .expect({ invalidPassword: true, userNotExists: false })
+      .end(done);
+  });
+
+  it('Should give userNotExists as true when user is not present', (ctx, done) => {
+    const isUserPresent = ctx.mock.fn(() => false);
+    const validateUserLogin = ctx.mock.fn();
+    const getUserHash = ctx.mock.fn(() => 'userHash');
+    const authController = { isUserPresent, validateUserLogin, getUserHash };
+
+    const userDetails = { username: 'milan', password: 1234 };
+
+    app.context = { authController };
+    request(app)
+      .post('/login')
+      .send(userDetails)
+      .set('Content-type', 'application/json')
+      .expect(401)
+      .expect('Content-Type', /application\/json/)
+      .expect({ invalidPassword: null, userNotExists: true })
       .end(done);
   });
 
@@ -30,12 +50,13 @@ describe('POST /login', () => {
     const getUserHash = ctx.mock.fn(() => 'userHash');
     const authController = { isUserPresent, validateUserLogin, getUserHash };
 
-    const userDetails = 'username=milan&password=1234';
+    const userDetails = { username: 'milan', password: 1234 };
 
     app.context = { authController };
     request(app)
       .post('/login')
       .send(userDetails)
+      .set('Content-type', 'application/json')
       .expect(302)
       .expect('location', '/')
       .expect('Set-Cookie', 'auth=userHash; Path=/')

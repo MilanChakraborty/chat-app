@@ -29,14 +29,21 @@ const sendLoginRequest = (event) => {
         window.location.replace(res.url);
         return;
       }
-      alert('Password Entered is Wrong');
+      return res.json();
+    })
+    .then(({ invalidPassword }) => {
+      if (invalidPassword) {
+        alert('Password Entered Was Incorrect');
+        return;
+      }
+      alert('Username Doesnot Exist, Please Signup');
     })
     .catch((err) => err);
 };
 
 const setupLoginForm = () => {
   const formElement = document.querySelector('#login-form');
-  formElement.onsubmit = sendSignupRequest;
+  formElement.onsubmit = sendLoginRequest;
 };
 
 window.onload = setupLoginForm;

@@ -20,24 +20,24 @@ const sendSignupRequest = (event) => {
   const password = readPassword();
   console.log(username, password);
 
-  // fetch('/login', {
-  //   method: 'POST',
-  //   headers: { 'content-type': 'application/json' },
-  //   body: JSON.stringify({ username, password }),
-  // })
-  //   .then((res) => {
-  //     if (res.redirected) {
-  //       window.location.replace(res.url);
-  //       return;
-  //     }
-  //     alert('Password Entered is Wrong');
-  //   })
-  //   .catch((err) => err);
+  fetch('/signup', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ username, password }),
+  })
+    .then((res) => {
+      if (res.redirected) {
+        window.location.replace(res.url);
+        return;
+      }
+      alert('Username Exists');
+    })
+    .catch((err) => err);
 };
 
-const setupLoginForm = () => {
+const setupSignupForm = () => {
   const formElement = document.querySelector('#signup-form');
   formElement.onsubmit = sendSignupRequest;
 };
 
-window.onload = setupLoginForm;
+window.onload = setupSignupForm;
