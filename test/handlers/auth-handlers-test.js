@@ -64,6 +64,23 @@ describe('POST /login', () => {
   });
 });
 
+describe('POST /signup', () => {
+  it('Should reject signup if the username already present', (ctx, done) => {
+    const isUserPresent = ctx.mock.fn(() => true);
+    const getUserHash = ctx.mock.fn();
+    const authController = { isUserPresent, getUserHash };
+
+    const app = createAndSetupApp();
+    app.context = { authController };
+
+    request(app)
+      .post('/signup')
+      .expect(401)
+      .expect({ usernameExists: true })
+      .end(done);
+  });
+});
+
 describe('GET /login-details', () => {
   it('Should give username and login status', (ctx, done) => {
     const getUsername = ctx.mock.fn(() => 'milan');

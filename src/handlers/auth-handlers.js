@@ -18,6 +18,12 @@ const sendInvalidPassword = (_, res) => {
   res.json({ invalidPassword: true, userNotExists: false });
 };
 
+const sendUsernameExists = (_, res) => {
+  console.log('reached');
+  res.status(401);
+  res.json({ usernameExists: true });
+};
+
 const isValidUser = (req) => {
   const { authController } = req.app.context;
   const userHash = req.cookies.auth;
@@ -50,10 +56,8 @@ const handleSignupRequest = (req, res) => {
   const { authController, chatsController } = req.app.context;
   const userHash = authController.getUserHash(username);
 
-  if (authController.isUserPresent(userHash)) {
-    res.json({ userExists: true });
-    return;
-  }
+  if (authController.isUserPresent(userHash))
+    return sendUsernameExists(req, res);
 
   authController.addUser(username, password, (userHash) => {
     chatsController.addUser(username, () => {
