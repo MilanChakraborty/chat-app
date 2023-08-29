@@ -7,10 +7,12 @@
 </head>
 
 <body>
+  <h1 class='page-header'>Step Chat</h1>
   <main class="page">
-    <h1 class='page-header'>SignUp</h1>
+    <h1 class='signup-header'>SignUp</h1>
     <form action="/signup" method='post' id='signup-form'>
-      <p class='username-instructions'>"Username can contain only lowercase alphabets, underscores and numbers, It cannot start with numbers"</p>
+      <p class='username-instructions'>"Username can contain only lowercase alphabets, underscores and numbers, It
+        cannot start with numbers"</p>
       <input type="text" id='username-box' name='username' placeholder='Username' pattern='[^0-9][a-z0-9_]+' required />
       <input type="password" id='password-box' name='password' placeholder='Password' required minlength='4'>
       <input type="submit" value="SignUp" class='signup-button'>
