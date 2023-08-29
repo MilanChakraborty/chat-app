@@ -1,6 +1,9 @@
 const { describe, it, beforeEach } = require('node:test');
 const request = require('supertest');
 const { createAndSetupApp } = require('../../src/app');
+const { AuthController } = require('../../src/auth-controller');
+const { Users } = require('../../src/models/users');
+const { ChatsController } = require('../../src/chats-controller');
 
 let app = null;
 
@@ -77,6 +80,24 @@ describe('POST /signup', () => {
       .post('/signup')
       .expect(401)
       .expect({ usernameExists: true })
+      .end(done);
+  });
+
+  it('Should signup new user', (ctx, done) => {
+    const users = new Users();
+    const authStorage = { updateDatabase: (_, onDBUpdate) => onDBUpdate() };
+    const chatStorage = { updateDatabase: (_, onDBUpdate) => onDBUpdate() };
+    const chats = { addUser: () => {} };
+    const authController = new AuthController(users, authStorage);
+    const chatsController = new ChatsController(chats, chatStorage);
+
+    const app = createAndSetupApp();
+    app.context = { authController, chatsController };
+
+    request(app)
+      .post('/signup')
+      .send({ username: 'Milan', password: 'Milan' })
+      .expect(302)
       .end(done);
   });
 });
