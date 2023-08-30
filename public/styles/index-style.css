@@ -167,7 +167,7 @@ body {
 }
 
 .chat {
-  height: 2em;
+  height: fit-content;
   width: fit-content;
   padding: 0.6em;
   margin: 0 1em 0.5em 1em;

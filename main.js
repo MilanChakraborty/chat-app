@@ -16,7 +16,9 @@ const main = () => {
   const PORT = 8000;
   const app = createAndSetupApp();
   injectDependencies(app);
-  app.listen(PORT, () => console.log(`Chat Server is Listening on ${PORT}`));
+  app.listen(PORT, () =>
+    console.log(`Chat Server is Listening on http://localhost:${PORT}`)
+  );
 };
 
 main();
