@@ -13,7 +13,7 @@ const injectDependencies = (app) => {
 };
 
 const main = () => {
-  const PORT = 8000;
+  const PORT = process.env.PORT || 8000;
   const app = createAndSetupApp();
   injectDependencies(app);
   app.listen(PORT, () =>
