@@ -4,7 +4,7 @@
   "description": "This is a Simple Server Based Sudoku game",
   "main": "main.js",
   "scripts": {
-    "test": "node --test",
+    "test": "node --test --test-reporter spec",
     "lint": "npx eslint .",
     "setup": "./bin/setup.sh",
     "start": "node main.js",
