@@ -31,4 +31,4 @@ class DataStorage {
   }
 }
 
-module.exports = DataStorage;
+module.exports = DataStorage
